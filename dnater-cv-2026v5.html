@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dan Nater</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eceef1;
+    --sheet:#ffffff;
+    --ink:#14171c;
+    --body:#2f353d;
+    --muted:#6b7280;
+    --faint:#9aa1ab;
+    --rule:#d9dde2;
+    --accent:#1d4e77;
+    --accent-soft:#8aa8c0;
+
+    --display:'Archivo','Helvetica Neue',Arial,sans-serif;
+    --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--body);
+    font-family:var(--serif);
+    font-size:12.5px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .sheet{
+    max-width:8.5in;
+    margin:26px auto;
+    background:var(--sheet);
+    padding:0.62in 0.6in 0.7in;
+    box-shadow:0 1px 2px rgba(20,23,28,.06), 0 14px 40px rgba(20,23,28,.09);
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:28px;
+    padding-bottom:18px;
+    border-bottom:2px solid var(--ink);
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:36px;
+    line-height:1;
+    letter-spacing:-0.025em;
+    color:var(--ink);
+    margin:0;
+  }
+  .place{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-top:11px;
+  }
+  .reach{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    text-align:right;
+    line-height:1.9;
+    white-space:nowrap;
+  }
+  .reach a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);}
+  .reach a:hover{color:var(--accent);border-bottom-color:var(--accent-soft);}
+  .reach a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+  /* ---------- section bands ---------- */
+  .band{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:30px 0 4px;
+  }
+  .band-label{
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:500;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    white-space:nowrap;
+  }
+  .band-rule{flex:1;height:1px;background:var(--ink);opacity:.8;}
+
+  /* ---------- summary ---------- */
+  .summary{
+    margin:14px 0 0;
+    font-size:13.5px;
+    line-height:1.62;
+    color:var(--ink);
+    max-width:none;
+  }
+
+  /* ---------- roles ---------- */
+  .role{margin-top:24px;}
+  .role:first-of-type{margin-top:18px;}
+
+  .head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+  }
+  .org{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:-0.008em;
+    color:var(--ink);
+    margin:0;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+  .lead{
+    flex:1;
+    height:1px;
+    background:var(--rule);
+    transform:translateY(-3px);
+  }
+  .years{
+    font-family:var(--mono);
+    font-size:11.5px;
+    font-weight:500;
+    color:var(--ink);
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+
+  .subhead{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:14px;
+    margin-top:5px;
+  }
+  .title{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:12px;
+    letter-spacing:.02em;
+    color:var(--accent);
+  }
+  .loc{
+    font-family:var(--mono);
+    font-size:9.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--faint);
+    white-space:nowrap;
+  }
+  .tag{
+    font-family:var(--mono);
+    font-size:9.5px;
+    letter-spacing:.06em;
+    color:var(--accent);
+    margin-top:5px;
+  }
+
+  .scope{margin:10px 0 0;max-width:none;}
+
+  .ach-label{
+    font-family:var(--mono);
+    font-size:9.5px;
+    font-weight:500;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--faint);
+    margin:14px 0 8px;
+  }
+  ul{list-style:none;margin:0;padding:0;}
+  ul li{
+    position:relative;
+    padding-left:19px;
+    margin-bottom:7px;
+    max-width:none;
+  }
+  ul li:last-child{margin-bottom:0;}
+  ul li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:9px;
+    width:9px;
+    height:1.5px;
+    background:var(--accent-soft);
+  }
+
+  /* ---------- earlier experience ---------- */
+  .early{margin-top:18px;}
+  .early:first-of-type{margin-top:14px;}
+  .early .org{font-size:13.5px;font-weight:600;}
+  .early .title{font-size:11.5px;}
+  .early ul{margin-top:8px;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:720px){
+    .sheet{margin:0;padding:30px 20px 38px;box-shadow:none;}
+    .masthead{flex-direction:column;align-items:flex-start;gap:14px;}
+    .reach{text-align:left;}
+    h1{font-size:30px;}
+    .head{flex-wrap:wrap;gap:4px 10px;}
+    .org{white-space:normal;}
+    .lead{display:none;}
+    .years{order:3;flex-basis:100%;}
+    .subhead{flex-direction:column;align-items:flex-start;gap:4px;}
+    ul li,.scope,.summary{max-width:none;}
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    body{background:#fff;font-size:10.2px;line-height:1.46;}
+    .sheet{margin:0;max-width:none;padding:0;box-shadow:none;}
+    @page{size:letter;margin:0.5in 0.5in;}
+    h1{font-size:28px;}
+    .role,.early{page-break-inside:avoid;break-inside:avoid;}
+    .band{page-break-after:avoid;break-after:avoid;margin-top:22px;}
+    .role{margin-top:17px;}
+    .early{margin-top:13px;}
+    .summary{font-size:11px;}
+    .org{font-size:13.5px;}
+    a{color:inherit;border-bottom:0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div>
+      <h1>Dan Nater</h1>
+      <div class="place">Northern California</div>
+    </div>
+    <div class="reach">
+      408-239-6345<br>
+      <a href="mailto:dnater@salmon.net">dnater@salmon.net</a>
+    </div>
+  </header>
+
+  <div class="band"><span class="band-label">Summary</span><span class="band-rule"></span></div>
+  <p class="summary">Technology executive with 35+ years building and leading Site Reliability Engineering, Production Engineering, Cloud Infrastructure, and Technical Operations organizations for internet-scale platforms. Led infrastructure supporting hundreds of millions of users, global real-time services, and large-scale cloud transformations. Track record improving reliability, scaling engineering organizations, modernizing infrastructure, and reducing operating cost.</p>
+
+  <div class="band"><span class="band-label">Experience</span><span class="band-rule"></span></div>
+
+  <article class="role">
+    <div class="head">
+      <h2 class="org">Yahoo!</h2>
+      <span class="lead"></span>
+      <span class="years">2017&ndash;Present</span>
+    </div>
+    <div class="subhead">
+      <span class="title">Senior Director, Production Engineering</span>
+      <span class="loc">Sunnyvale, CA</span>
+    </div>
+    <p class="scope">Lead Production Engineering for Yahoo Mail, one of the world&rsquo;s largest consumer platforms. Own reliability, scalability, production infrastructure, service operations, capacity, and operational engineering for systems serving hundreds of millions of users, while modernizing the platform through its large-scale transition to Google Cloud.</p>
+    <div class="ach-label">Selected Achievements</div>
+    <ul>
+      <li>Lead the publicly announced migration of hundreds of millions of mailboxes and more than 500 PB of Yahoo Mail data to Google Cloud, transforming one of the largest consumer mail platforms while maintaining service continuity, on plan and on budget.</li>
+      <li>Cut serious incidents (P1 and P2) 85% from 2018 to 2024, with P1 incidents falling from 19 to 3. Delivered a full year with zero Mail-responsible P1 incidents.</li>
+      <li>Built and sustained a global Production Engineering organization with employee engagement among the highest at Yahoo, strengthening technical leadership, operational ownership, and engineering execution.</li>
+      <li>Partnered across engineering, product, finance, and Google Cloud on migration strategy, demand planning, capacity, cost optimization, and execution of the multi-year cloud transformation.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="head">
+      <h2 class="org">BlueJeans Network</h2>
+      <span class="lead"></span>
+      <span class="years">2015&ndash;2017</span>
+    </div>
+    <div class="subhead">
+      <span class="title">Vice President, Operations</span>
+      <span class="loc">Mountain View, CA</span>
+    </div>
+    <p class="scope">Led Technical Operations for BlueJeans&rsquo; global cloud video collaboration platform. Responsible for Site Reliability Engineering, data center and cloud infrastructure, global network operations, automation, service delivery, and 24/7 operations.</p>
+    <div class="ach-label">Selected Achievements</div>
+    <ul>
+      <li>Built and scaled the global operations organization across the U.S. and India, supporting a rapidly growing worldwide video collaboration service.</li>
+      <li>Led global network engineering, achieving greater than 99.999% reliability.</li>
+      <li>Automated deployment and lifecycle management across infrastructure spanning thousands of servers, reducing deployment time by approximately 75%.</li>
+      <li>Owned infrastructure capacity planning and COGS modeling across data center, network, compute, and cloud services.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="head">
+      <h2 class="org">Cisco Systems / WebEx</h2>
+      <span class="lead"></span>
+      <span class="years">2009&ndash;2015</span>
+    </div>
+    <div class="subhead">
+      <span class="title">Senior Director, Cloud Services</span>
+      <span class="loc">San Jose, CA</span>
+    </div>
+    <p class="scope">Led Cloud Services and Technical Operations for WebEx, Jabber, and TelePresence, supporting real-time collaboration at global scale. Responsible for infrastructure, service engineering, 24/7 operations, service delivery, and platforms across data centers, network, compute, storage, and databases.</p>
+    <div class="ach-label">Selected Achievements</div>
+    <ul>
+      <li>Operated global infrastructure supporting peak loads of approximately 30,000 concurrent meetings and 150,000 participants.</li>
+      <li>Migrated WebEx voice infrastructure from PSTN to VoIP and replaced third-party audio processing with an internally developed voice platform, reducing COGS by 80%.</li>
+      <li>Migrated Linux services to OpenStack, beginning a broader transformation from legacy infrastructure to cloud-based platforms.</li>
+      <li>Enabled public-sector business through FedRAMP and achieved ISO 9001 and SOC 2 compliance.</li>
+      <li>Expanded WebEx into China through deployment of a complete service platform in partnership with a local telecom joint venture.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="head">
+      <h2 class="org">Claria Corporation</h2>
+      <span class="lead"></span>
+      <span class="years">2002&ndash;2008</span>
+    </div>
+    <div class="subhead">
+      <span class="title">Vice President, Technical Operations</span>
+      <span class="loc">Redwood City, CA</span>
+    </div>
+    <p class="scope">Led Technical Operations for a large-scale advertising and data platform serving approximately 40 million active PCs and delivering hundreds of millions of ads daily. Responsible for global infrastructure, data centers, network and application security, production platforms, operations, availability, deployment, disaster recovery, capacity planning, and technology strategy.</p>
+    <div class="ach-label">Selected Achievements</div>
+    <ul>
+      <li>Designed and implemented a multi-site architecture supporting five-nines availability across a high-volume, data-intensive platform.</li>
+      <li>Built and operated infrastructure spanning thousands of Linux servers, large-scale Oracle and analytics platforms, and multiple data centers with diverse network connectivity.</li>
+      <li>Designed and implemented a content distribution platform supporting high-volume delivery across the advertising network.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="head">
+      <h2 class="org">NOCpulse, Inc.</h2>
+      <span class="lead"></span>
+      <span class="years">2000&ndash;2002</span>
+    </div>
+    <div class="subhead">
+      <span class="title">Vice President, Operations</span>
+      <span class="loc">Sunnyvale, CA</span>
+    </div>
+    <div class="tag">Acquired by Red Hat, 2002</div>
+    <p class="scope">Led Operations for a SaaS-based infrastructure and application monitoring startup. Responsible for production infrastructure, 24/7 operations, security, corporate IT, professional services, and customer delivery.</p>
+    <div class="ach-label">Selected Achievements</div>
+    <ul>
+      <li>Built the IT and Operations organization from 0 to 40 employees in six months.</li>
+      <li>Designed and operated the highly secure, redundant infrastructure supporting the hosted monitoring service, achieving 100% of SLA targets.</li>
+      <li>Helped define the flagship product, delivery model, pricing, and roadmap, while supporting enterprise sales that closed the three largest customers representing more than 50% of company revenue.</li>
+      <li>Helped build and scale the company through its 2002 acquisition by Red Hat; core NOCpulse technology became part of the Red Hat Network monitoring platform.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="head">
+      <h2 class="org">Excite, Inc.</h2>
+      <span class="lead"></span>
+      <span class="years">1997&ndash;2000</span>
+    </div>
+    <div class="subhead">
+      <span class="title">Senior Director, Product Operations</span>
+      <span class="loc">Redwood City, CA</span>
+    </div>
+    <p class="scope">Led Product Operations for Excite, one of the world&rsquo;s most heavily trafficked internet portals, with responsibility for production infrastructure, databases, platform operations, operations engineering, and 24/7 service operations.</p>
+    <div class="ach-label">Selected Achievements</div>
+    <ul>
+      <li>Operated 50+ consumer internet services, including search, email, messaging, community, and one of the Internet&rsquo;s first personalized homepages, serving more than 150 million web pages per day.</li>
+      <li>Maintained 99.98%+ service availability while supporting rapid product launches, often delivering new services weekly without increasing operations staffing.</li>
+      <li>Built and led a 70-person organization spanning systems engineering, database operations, software engineering, and 24/7 operations.</li>
+      <li>Designed multi-site infrastructure, load distribution, monitoring, management, and disaster recovery systems for thousands of servers before commercial tooling for these capabilities was widely available.</li>
+      <li>Expanded Excite internationally, launching localized services across Europe and Asia through joint ventures and regional partners.</li>
+    </ul>
+  </article>
+
+  <div class="band"><span class="band-label">Earlier Experience</span><span class="band-rule"></span></div>
+
+  <article class="early">
+    <div class="head">
+      <h2 class="org">Global Village Communications, Inc</h2>
+      <span class="lead"></span>
+      <span class="years">1995&ndash;1997</span>
+    </div>
+    <div class="subhead"><span class="title">Manager, Information Systems</span></div>
+    <ul>
+      <li>Led corporate infrastructure, telecommunications, enterprise systems, and early e-commerce capabilities during a period of rapid internet growth.</li>
+    </ul>
+  </article>
+
+  <article class="early">
+    <div class="head">
+      <h2 class="org">Asante Technologies, Inc</h2>
+      <span class="lead"></span>
+      <span class="years">1994</span>
+    </div>
+    <div class="subhead"><span class="title">Manager, Desktop Systems</span></div>
+    <ul>
+      <li>Managed enterprise computing infrastructure and implemented core network, server, backup, remote access, and internet services.</li>
+    </ul>
+  </article>
+
+  <article class="early">
+    <div class="head">
+      <h2 class="org">Verity, Inc.</h2>
+      <span class="lead"></span>
+      <span class="years">1988&ndash;1993</span>
+    </div>
+    <div class="subhead"><span class="title">Senior Product Support Engineer</span></div>
+    <ul>
+      <li>Held technical roles spanning product support, software testing, engineering liaison, and customer systems.</li>
+    </ul>
+  </article>
+
+</div>
+
+</body>
+</html>
