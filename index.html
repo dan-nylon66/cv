@@ -4,65 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dan Nater</title>
-<script>
-  (() => {
-    const storageKey = "dnater-cv-theme";
-    const systemPreference = window.matchMedia("(prefers-color-scheme: dark)");
-    let savedTheme;
-
-    try {
-      savedTheme = localStorage.getItem(storageKey);
-    } catch (error) {
-      savedTheme = null;
-    }
-
-    const applyTheme = (theme) => {
-      document.documentElement.dataset.theme = theme;
-      document.documentElement.style.colorScheme = theme;
-    };
-
-    applyTheme(savedTheme || (systemPreference.matches ? "dark" : "light"));
-
-    window.addEventListener("DOMContentLoaded", () => {
-      const toggle = document.querySelector(".theme-toggle");
-
-      const updateToggle = () => {
-        const isDark = document.documentElement.dataset.theme === "dark";
-        const nextTheme = isDark ? "light" : "dark";
-        toggle.setAttribute("aria-label", `Switch to ${nextTheme} mode`);
-        toggle.setAttribute("title", `Switch to ${nextTheme} mode`);
-        toggle.setAttribute("aria-pressed", String(isDark));
-      };
-
-      toggle.addEventListener("click", () => {
-        const nextTheme =
-          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-        applyTheme(nextTheme);
-
-        try {
-          localStorage.setItem(storageKey, nextTheme);
-        } catch (error) {
-          // The theme still works when browser storage is unavailable.
-        }
-
-        updateToggle();
-      });
-
-      systemPreference.addEventListener("change", (event) => {
-        try {
-          if (localStorage.getItem(storageKey)) return;
-        } catch (error) {
-          // Follow the system preference when browser storage is unavailable.
-        }
-
-        applyTheme(event.matches ? "dark" : "light");
-        updateToggle();
-      });
-
-      updateToggle();
-    });
-  })();
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -77,26 +18,21 @@
     --rule:#d9dde2;
     --accent:#1d4e77;
     --accent-soft:#8aa8c0;
-    --shadow:0 1px 2px rgba(20,23,28,.06), 0 14px 40px rgba(20,23,28,.09);
-    --toggle-hover:#f5f7f9;
 
     --display:'Archivo','Helvetica Neue',Arial,sans-serif;
     --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
     --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
   }
-
   :root[data-theme="dark"]{
-    --paper:#0b1016;
-    --sheet:#151c24;
-    --ink:#f4f1ea;
-    --body:#d2d9e1;
-    --muted:#a9b4c0;
-    --faint:#8794a2;
-    --rule:#34414e;
-    --accent:#83bce6;
-    --accent-soft:#6092b8;
-    --shadow:0 1px 2px rgba(0,0,0,.28), 0 18px 52px rgba(0,0,0,.32);
-    --toggle-hover:#202a35;
+    --paper:#12161b;
+    --sheet:#1d232b;
+    --ink:#f4f6f8;
+    --body:#d7dce2;
+    --muted:#adb6c2;
+    --faint:#8994a2;
+    --rule:#3b4653;
+    --accent:#8fc5ed;
+    --accent-soft:#5f88a7;
   }
 
   *{box-sizing:border-box;}
@@ -109,47 +45,45 @@
     font-size:12.5px;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
-    transition:background-color .2s ease,color .2s ease;
   }
 
   .sheet{
-    max-width:8.5in;
+    width:calc(100% - 32px);
+    max-width:10in;
     margin:26px auto;
     background:var(--sheet);
-    padding:0.62in 0.6in 0.7in;
-    box-shadow:var(--shadow);
-    transition:background-color .2s ease,box-shadow .2s ease;
+    padding:clamp(0.42in,5vw,0.62in) clamp(0.34in,5vw,0.6in) clamp(0.5in,5vw,0.7in);
+    box-shadow:0 1px 2px rgba(20,23,28,.06), 0 14px 40px rgba(20,23,28,.09);
   }
-
-  .theme-toggle{
-    position:fixed;
-    z-index:10;
-    top:18px;
-    right:18px;
-    display:grid;
-    place-items:center;
-    width:42px;
-    height:42px;
+  .print-tools{
+    width:calc(100% - 32px);
+    max-width:10in;
+    margin:18px auto -12px;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    transform:translateX(24px);
+  }
+  .tool-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:34px;
+    height:34px;
     padding:0;
+    color:var(--accent);
+    background:var(--sheet);
     border:1px solid var(--rule);
     border-radius:50%;
-    background:var(--sheet);
-    color:var(--ink);
-    box-shadow:var(--shadow);
     cursor:pointer;
-    transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s ease;
+    box-shadow:0 2px 8px rgba(20,23,28,.08);
+    transition:color .15s ease,border-color .15s ease,background .15s ease,transform .15s ease;
   }
-  .theme-toggle:hover{background:var(--toggle-hover);transform:translateY(-1px);}
-  .theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-  .theme-toggle svg{width:19px;height:19px;stroke:currentColor;}
-  .theme-toggle .moon{display:block;}
-  .theme-toggle .sun{display:none;}
-  :root[data-theme="dark"] .theme-toggle .moon{display:none;}
-  :root[data-theme="dark"] .theme-toggle .sun{display:block;}
-
-  @media (prefers-reduced-motion:reduce){
-    body,.sheet,.theme-toggle{transition:none;}
-  }
+  .tool-button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .tool-button:hover{color:var(--ink);border-color:var(--accent-soft);transform:translateY(-1px);}
+  .tool-button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .tool-button[aria-pressed="true"]{color:var(--sheet);background:var(--accent);border-color:var(--accent);}
+  @media (prefers-reduced-motion:reduce){.tool-button{transition:none;}}
 
   /* ---------- masthead ---------- */
   .masthead{
@@ -157,8 +91,7 @@
     justify-content:space-between;
     align-items:flex-end;
     gap:28px;
-    padding-bottom:18px;
-    border-bottom:2px solid var(--ink);
+    padding-bottom:0;
   }
   h1{
     font-family:var(--display);
@@ -168,6 +101,17 @@
     letter-spacing:-0.025em;
     color:var(--ink);
     margin:0;
+  }
+  .executive-tagline{
+    max-width:none;
+    margin-top:10px;
+    font-family:var(--display);
+    font-size:14px;
+    font-weight:600;
+    line-height:1.45;
+    letter-spacing:.005em;
+    color:var(--accent);
+    white-space:nowrap;
   }
   .place{
     font-family:var(--mono);
@@ -179,13 +123,14 @@
   }
   .reach{
     font-family:var(--mono);
-    font-size:11px;
-    color:var(--muted);
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink);
     text-align:right;
-    line-height:1.9;
+    line-height:1.75;
     white-space:nowrap;
   }
-  .reach a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);}
+  .reach a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);}
   .reach a:hover{color:var(--accent);border-bottom-color:var(--accent-soft);}
   .reach a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
 
@@ -317,12 +262,18 @@
   .early ul{margin-top:8px;}
 
   /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .masthead{gap:18px;}
+    .executive-tagline{font-size:12px;white-space:normal;}
+  }
+
   @media (max-width:720px){
-    .sheet{margin:0;padding:30px 20px 38px;box-shadow:none;}
-    .theme-toggle{top:14px;right:14px;}
+    .print-tools{width:auto;margin:12px 20px;transform:translateX(12px);}
+    .sheet{width:100%;margin:0;padding:30px 20px 38px;box-shadow:none;}
     .masthead{flex-direction:column;align-items:flex-start;gap:14px;}
     .reach{text-align:left;}
     h1{font-size:30px;}
+    .executive-tagline{font-size:11px;white-space:normal;}
     .head{flex-wrap:wrap;gap:4px 10px;}
     .org{white-space:normal;}
     .lead{display:none;}
@@ -333,12 +284,19 @@
 
   /* ---------- print ---------- */
   @media print{
-    body{background:#fff;font-size:10.2px;line-height:1.46;}
-    .sheet{margin:0;max-width:none;padding:0;box-shadow:none;}
-    .theme-toggle{display:none;}
-    @page{size:letter;margin:0.5in 0.5in;}
+    :root,:root[data-theme="dark"]{
+      --paper:#fff;--sheet:#fff;--ink:#14171c;--body:#2f353d;--muted:#6b7280;--faint:#9aa1ab;--rule:#d9dde2;--accent:#1d4e77;--accent-soft:#8aa8c0;
+    }
+    html,body{width:100%;margin:0;padding:0;background:#fff;}
+    body{font-size:10.2px;line-height:1.46;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .print-tools{display:none !important;}
+    .sheet{width:100%;margin:0;max-width:none;padding:0;box-shadow:none;}
+    @page{size:letter portrait;margin:0.55in;}
     h1{font-size:28px;}
+    .masthead{break-inside:avoid;break-after:avoid-page;}
+    .executive-tagline{max-width:470px;font-size:9.2px;line-height:1.4;margin-top:7px;white-space:normal;}
     .role,.early{page-break-inside:avoid;break-inside:avoid;}
+    li{break-inside:avoid;orphans:2;widows:2;}
     .band{page-break-after:avoid;break-after:avoid;margin-top:22px;}
     .role{margin-top:17px;}
     .early{margin-top:13px;}
@@ -350,21 +308,24 @@
 </head>
 <body>
 
-<button class="theme-toggle" type="button" aria-label="Switch color mode">
-  <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <circle cx="12" cy="12" r="3.5" stroke-width="1.8"/>
-    <path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.5 12h2M19.5 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-</button>
+<div class="print-tools" role="toolbar" aria-label="Résumé display controls">
+  <button class="tool-button" type="button" onclick="window.print()" aria-label="Print résumé" title="Print résumé">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5"/><path d="M7 17H5a3 3 0 0 1-3-3v-3a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3h-2"/><path d="M7 14h10v7H7z"/><path d="M18 11h.01"/></svg>
+  </button>
+  <button class="tool-button theme-button" type="button" data-theme-choice="light" aria-label="Use light mode" title="Light mode">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button class="tool-button theme-button" type="button" data-theme-choice="dark" aria-label="Use dark mode" title="Dark mode">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2z"/></svg>
+  </button>
+</div>
 
 <div class="sheet">
 
   <header class="masthead">
     <div>
       <h1>Dan Nater</h1>
+      <div class="executive-tagline">Technology Executive | Reliability, Production &amp; Cloud Infra at Scale | &ldquo;Delivers the Essential&rdquo;</div>
       <div class="place">Northern California</div>
     </div>
     <div class="reach">
@@ -554,6 +515,29 @@
   </article>
 
 </div>
+
+<script>
+  (() => {
+    const root = document.documentElement;
+    const buttons = document.querySelectorAll('[data-theme-choice]');
+    let saved = null;
+    try { saved = localStorage.getItem('cv-theme'); } catch (_) {}
+    const initial = saved === 'dark' || saved === 'light'
+      ? saved
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    function setTheme(theme) {
+      root.dataset.theme = theme;
+      try { localStorage.setItem('cv-theme', theme); } catch (_) {}
+      buttons.forEach(button => {
+        button.setAttribute('aria-pressed', String(button.dataset.themeChoice === theme));
+      });
+    }
+
+    buttons.forEach(button => button.addEventListener('click', () => setTheme(button.dataset.themeChoice)));
+    setTheme(initial);
+  })();
+</script>
 
 </body>
 </html>
